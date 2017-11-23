@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<analysisprotocol name="CollarOcuppancy_INCellDev" description="DAPI, GFP, Olig2, Tub&#13;&#10;Journal of Neuroscience Methods" mode="EXSAMPENG" lock="false" >
+<DataSaveOptions LG2="true" XLS="true" CommaText="false" TabText="false" XML="true" XSLT="" ResultsAll="true" GS_EXCEL="false" miner="false" UseStackName="false" ShowZeroSummaryRow="true" >
+</DataSaveOptions>
+<exsampengspecificdata >
+<ex_sample_engine_settings ex_sample_engine_settings="default" >
+<channels channel_manager="default" >
+<channel_setting channel_number="0" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="1" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="2" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="3" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="4" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="5" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="6" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="7" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="8" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="9" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="10" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="11" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="12" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="13" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="14" channel_label="" image_name="" channel_status="1" />
+<channel_setting channel_number="15" channel_label="" image_name="" channel_status="1" />
+</channels>
+<template_settings template_manager="default" >
+<template name="seed" result="seed" color="00FF0000" >
+<segment name="Granular segmentation" guid="1588a208-1e64-4c0e-a166-266331d75334" option="kernelSize 11, Sensitivity 26, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 1, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 0, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 4.000000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1, Exclusions ExclLabel0&#62;180" channel="0" destination_channel="I413" />
+<post_processing >
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I413" destination_channel="I414" option="Enabled 1, Criteria 5, Threshold 36.5202" />
+<transform name="Erosion (Binary)" guid="16e8a36f-d702-4818-a693-aa2c5b0569af" channel="I414" destination_channel="I418" option="Enabled 1, Value 5, Maximum 127, Minimum 3, Step 2, Shape 1" />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="Nuclei" result="Nuclei" color="00FF0000" >
+<segment name="Granular segmentation" guid="1588a208-1e64-4c0e-a166-266331d75334" option="kernelSize 11, Sensitivity 26, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 1, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 0, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 1.300000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1, Exclusions ExclLabel22&#62;0.7&#38;&#38;ExclLabel0&#62;200" channel="6" destination_channel="I1" />
+<post_processing >
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I1" destination_channel="I426" option="Enabled 1, Criteria 7, Threshold 365.203" />
+<transform name="Border Object Removal" guid="d80f22e9-10f6-4652-9692-92d41f4cf03c" channel="I426" destination_channel="I698" option="Enabled 1, Distance 1, RemovalMode ByTouch, TouchMode 1, " />
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I698" destination_channel="I704" option="Enabled 1, Criteria 5, Threshold 63.9104" />
+<transform name="Dilation (Binary)" guid="cb0e0118-f096-4b27-b340-43e78b58639d" channel="I704" destination_channel="I705" option="Enabled 1, Value 3, Maximum 127, Minimum 3, Step 2, Shape 1" />
+<transform name="Clump breaking" guid="b89fa61a-e3c7-461f-9101-819dbce54853" channel="I705,I418" destination_channel="7" option="Enabled 1, MinScale 2, Radius 2, IncludeSecondaryTargets 0" />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="0" destination_channel="6" option="MacroName chn1to7 smooth, Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="CellBody + Nuc" result="CellBody + Nuc" color="0000FFFF" >
+<segment name="Granular segmentation" guid="1588a208-1e64-4c0e-a166-266331d75334" option="kernelSize 11, Sensitivity 26, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 0, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 0, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 4.000000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1" channel="0" destination_channel="I642" />
+<post_processing >
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I642" destination_channel="I699" option="Enabled 1, Criteria 7, Threshold 365.202" />
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I699" destination_channel="I701" option="Enabled 1, Criteria 5, Threshold 45.6503" />
+<transform name="Dilation (Binary)" guid="cb0e0118-f096-4b27-b340-43e78b58639d" channel="I701" destination_channel="I45" option="Enabled 1, Value 7, Maximum 127, Minimum 3, Step 2, Shape 1" />
+<transform name="Clump breaking" guid="b89fa61a-e3c7-461f-9101-819dbce54853" channel="I45,7" destination_channel="I697" option="Enabled 1, MinScale 2, Radius 19, IncludeSecondaryTargets 0" />
+<transform name="Border Object Removal" guid="d80f22e9-10f6-4652-9692-92d41f4cf03c" channel="I697" destination_channel="9" option="Enabled 1, Distance 1, RemovalMode ByTouch, TouchMode 1, " />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="Collar" result="Collar" color="0000FFFF" >
+<segment name="Granular segmentation" guid="1588a208-1e64-4c0e-a166-266331d75334" option="kernelSize 11, Sensitivity 26, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 0, RemoveSinglePixelTarget 0, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 0, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 4.000000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1" channel="0" destination_channel="I46" />
+<post_processing >
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I46" destination_channel="I47" option="Enabled 1, Criteria 7, Threshold 0" />
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I47" destination_channel="I48" option="Enabled 1, Criteria 7, Threshold 0" />
+<transform name="Dilation (Binary)" guid="cb0e0118-f096-4b27-b340-43e78b58639d" channel="I48" destination_channel="I49" option="Enabled 1, Value 3, Maximum 127, Minimum 3, Step 2, Shape 1" />
+<transform name="Clump breaking" guid="b89fa61a-e3c7-461f-9101-819dbce54853" channel="I49,7" destination_channel="8" option="Enabled 1, MinScale 2, Radius 10, IncludeSecondaryTargets 1" />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="Cy5 network" result="Cy5 network" color="0000FF00" >
+<segment name="Granular segmentation" guid="1588a208-1e64-4c0e-a166-266331d75334" option="kernelSize 7, Sensitivity 84, Enabled 1, Color 3, PerformExclusions 1, SubtargetFilled 0, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 3, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 1.300000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_constraints, LowBackground 0, Exclusions ExclLabel0&#62;180" channel="10" destination_channel="I488" />
+<post_processing >
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I488" destination_channel="11" option="Enabled 1, Criteria 5, Threshold 18.2601" />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="3" destination_channel="10" option="MacroName Ch4to11 TA, Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="Network final" result="Network final" color="000000FF" >
+<segment name="Gray scale segmentation" guid="f814ed56-9a0e-472d-8754-5dced6ebc02f" option="Minimum 1.00, Maximum 65535.00, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 0, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 3, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 4.000000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1" channel="12" destination_channel="12" />
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="3" destination_channel="12" option="MacroName Add10+12to13, Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="Processes" result="Processes" color="0000FF00" >
+<segment name="Gray scale segmentation" guid="f814ed56-9a0e-472d-8754-5dced6ebc02f" option="Minimum 1.00, Maximum 65535.00, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 0, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 3, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 4.000000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1" channel="13" destination_channel="I631" />
+<post_processing >
+<transform name="Clump breaking" guid="b89fa61a-e3c7-461f-9101-819dbce54853" channel="I631,8" destination_channel="I50" option="Enabled 1, MinScale 2, Radius 2, IncludeSecondaryTargets 0" />
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I50" destination_channel="15" option="Enabled 1, Criteria 5, Threshold 9.13006" />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="3" destination_channel="13" option="MacroName Sub13-8 to 14, Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+<template name="Processes in collar" result="Processes in collar" color="000000FF" >
+<segment name="Gray scale segmentation" guid="f814ed56-9a0e-472d-8754-5dced6ebc02f" option="Minimum 1.00, Maximum 65535.00, Enabled 1, Color 3, PerformExclusions 0, SubtargetFilled 0, RemoveSinglePixelTarget 1, TargetSizeActive 0, TargetSize 0.000000, SelPreviewChanl 3, FiltersToOutputImage 1, PreciseMaskMode 1, ExpandSensitivityRange 0, AdvSensitivityRange 4.000000, SetPreferredMorphology 1, UseAutoThreshold 0, ShapeDetection No_restrictions, LowBackground 1" channel="15" destination_channel="I638" />
+<post_processing >
+<transform name="Sieve (Binary)" guid="259a15b2-5f9d-47a6-9b5b-4d1fa3928988" channel="I638" destination_channel="I640" option="Enabled 1, Criteria 5, Threshold 9.13006" />
+</post_processing>
+<pre_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="3" destination_channel="15" option="MacroName Combmin 9and16to16, Enable 1" />
+<post_process_macro name="Macro" guid="d4874593-1ac4-4ab1-a07b-e1a3029b2a96" channel="" destination_channel="" option="MacroName , Enable 1" />
+</template>
+</template_settings>
+<link_settings link_manager="default" >
+<link_setting name="Collar_Nuc" type="0" prime_source="Collar" second_source="Nuclei" comment="" relation="0" >
+<link_setting_option name="Overlap" guid="65c86e60-be59-42f7-b8f2-108669a96a73" option="LinkType 1, OverlapType 1, OverlapPercent 100, FullVsPartial 0, BigVsSmall 0, LargeVsTiny 0, Base 1, ShareTargets 0, DisplayMeasures 0, MatchedType 0" />
+</link_setting>
+<link_setting name="Collar_Processes" type="0" prime_source="Collar" second_source="Processes" comment="" relation="1" >
+<link_setting_option name="Overlap" guid="65c86e60-be59-42f7-b8f2-108669a96a73" option="LinkType 1, OverlapType 2, OverlapPercent 100, FullVsPartial 0, BigVsSmall 0, LargeVsTiny 0, Base 1, ShareTargets 0, DisplayMeasures 0, MatchedType 0" />
+</link_setting>
+<composed_link name="Nuc_Collar_Processes" type="1" prime_source="Collar_Nuc" second_source="Collar_Processes" comment="" relation="0" prime_match_dsp="Collar_Nuc\Collar" second_match_dsp="Collar_Processes\Collar" >
+<link_setting_option name="Overlap" guid="65c86e60-be59-42f7-b8f2-108669a96a73" option="LinkType 1, OverlapType 2, OverlapPercent 100, FullVsPartial 0, BigVsSmall 0, LargeVsTiny 0, Base 1, ShareTargets 0, DisplayMeasures 0, MatchedType 0" />
+</composed_link>
+<link_setting name="Collar_Processes in collar" type="0" prime_source="Collar" second_source="Processes in collar" comment="" relation="1" >
+<link_setting_option name="Overlap" guid="65c86e60-be59-42f7-b8f2-108669a96a73" option="LinkType 1, OverlapType 2, OverlapPercent 100, FullVsPartial 0, BigVsSmall 0, LargeVsTiny 0, Base 1, ShareTargets 0, DisplayMeasures 0, MatchedType 0" />
+</link_setting>
+<composed_link name="final target set" type="1" prime_source="Nuc_Collar_Processes" second_source="Collar_Processes in collar" comment="" relation="0" prime_match_dsp="Nuc_Collar_Processes\Collar" second_match_dsp="Collar_Processes in collar\Collar" >
+<link_setting_option name="Overlap" guid="65c86e60-be59-42f7-b8f2-108669a96a73" option="LinkType 1, OverlapType 2, OverlapPercent 100, FullVsPartial 0, BigVsSmall 0, LargeVsTiny 0, Base 1, ShareTargets 0, DisplayMeasures 0, MatchedType 0" />
+</composed_link>
+</link_settings>
+<user_defined_measures >
+<measure label="Area Processes in Collar/Area Collar" name="Area Processes in Collar/Area Collar" equation="([Area&#60;\final target set\Collar_Processes in collar\Sum:Processes in collar&#62;] / [Area&#60;\final target set\Collar_Processes in collar\Collar&#62;]) * 100" >
+</measure>
+<measure label="Area Processes in Collar" name="Area Processes in Collar" equation="[Area&#60;\final target set\Collar_Processes in collar\Sum:Processes in collar&#62;]" >
+</measure>
+<measure label="Total Process length per cell" name="Total Process length per cell" equation="[Fiber Length&#60;\final target set\Nuc_Collar_Processes\Sum:Processes&#62;]" >
+</measure>
+<measure label="Total Process Area per cell" name="Total Process Area per cell" equation="[Area&#60;\final target set\Nuc_Collar_Processes\Sum:Processes&#62;]" >
+</measure>
+<measure label="x pos nuc" name="x pos nuc" equation="[Pos X&#60;\final target set\Nuc_Collar_Processes\Nuclei&#62;]" >
+</measure>
+<measure label="y pos nuc" name="y pos nuc" equation="[Pos Y&#60;\final target set\Nuc_Collar_Processes\Nuclei&#62;]" >
+</measure>
+<measure label="Area Collar" name="Area Collar" equation="[Area&#60;\final target set\Collar_Processes in collar\Collar&#62;]" >
+</measure>
+<measure label="Area Nuclei" name="Area Nuclei" equation="[Area&#60;\final target set\Nuc_Collar_Processes\Nuclei&#62;]" >
+</measure>
+<measure label="Mean Intensity FITC Nuc" name="Mean Intensity FITC Nuc" equation="[Dens - Levels&#60;\final target set\Nuc_Collar_Processes\Nuclei&#62;]" >
+</measure>
+<measure label="Mean Intensity TR Nuc" name="Mean Intensity TR Nuc" equation="[Dens - Levels&#60;\final target set\Nuc_Collar_Processes\Nuclei&#62;]" >
+</measure>
+<measure label="Total number of cells (final targets)" name="Total number of cells (final targets)" equation="[Count&#60;\final target set\Nuc_Collar_Processes\Nuclei&#62;]" >
+</measure>
+<measure label="GFP status" name="cls_GFP status" equation="0" >
+</measure>
+<measure label="Olig2 status" name="cls_Olig2 status" equation="0" >
+</measure>
+</user_defined_measures>
+<targetpath_settings targetpath_manager="default" >
+<targetpath name="Collar_Processes\All:Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Nuc_Collar_Processes\Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Nuc_Collar_Processes\All:Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Nuc_Collar_Processes\Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Nuc_Collar_Processes\Nuclei" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Nuc_Collar_Processes\Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Nuc_Collar_Processes\All:Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes in collar\All:Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Collar_Processes in collar\Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Collar_Processes in collar\Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Collar_Processes in collar\All:Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="seed" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Nuclei" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Nuc\Nuclei" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="CellBody + Nuc" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Nuc\Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes\Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes in collar\Collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Cy5 network" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Network final" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes\Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes in collar\Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Nuc" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Nuc_Collar_Processes\Nuclei" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Nuc_Collar_Processes\Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Nuc_Collar_Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Nuc_Collar_Processes" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="Collar_Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set\Collar_Processes in collar" >
+<measures >
+</measures>
+</targetpath>
+<targetpath name="final target set" >
+<measures >
+<measure_setting channel_number="3" individual_measure="1" measure_id="100" measure_label="Area Processes in Collar/Area Collar" measure_unit="" measure_source="Ch 4" complex_measure_name="Area Processes in Collar/Area Collar" summary_id="-1" owner="1" />
+<measure_setting channel_number="3" individual_measure="1" measure_id="100" measure_label="Area Processes in Collar" measure_unit="" measure_source="Ch 4" complex_measure_name="Area Processes in Collar" summary_id="-1" owner="1" />
+<measure_setting channel_number="3" individual_measure="1" measure_id="100" measure_label="Total Process length per cell" measure_unit="" measure_source="Ch 4" complex_measure_name="Total Process length per cell" summary_id="-1" owner="1" />
+<measure_setting channel_number="3" individual_measure="1" measure_id="100" measure_label="Total Process Area per cell" measure_unit="" measure_source="Ch 4" complex_measure_name="Total Process Area per cell" summary_id="-1" owner="1" />
+<measure_setting channel_number="0" individual_measure="1" measure_id="100" measure_label="x pos nuc" measure_unit="" measure_source="Ch 1" complex_measure_name="x pos nuc" summary_id="-1" owner="1" />
+<measure_setting channel_number="0" individual_measure="1" measure_id="100" measure_label="y pos nuc" measure_unit="" measure_source="Ch 1" complex_measure_name="y pos nuc" summary_id="-1" owner="1" />
+<measure_setting channel_number="0" individual_measure="1" measure_id="100" measure_label="Area Collar" measure_unit="" measure_source="Ch 1" complex_measure_name="Area Collar" summary_id="-1" owner="1" />
+<measure_setting channel_number="0" individual_measure="1" measure_id="100" measure_label="Area Nuclei" measure_unit="" measure_source="Ch 1" complex_measure_name="Area Nuclei" summary_id="-1" owner="1" />
+<measure_setting channel_number="1" individual_measure="1" measure_id="100" measure_label="Mean Intensity FITC Nuc" measure_unit="" measure_source="Ch 2" complex_measure_name="Mean Intensity FITC Nuc" summary_id="-1" owner="1" />
+<measure_setting channel_number="2" individual_measure="1" measure_id="100" measure_label="Mean Intensity TR Nuc" measure_unit="" measure_source="Ch 3" complex_measure_name="Mean Intensity TR Nuc" summary_id="-1" owner="1" />
+<measure_setting channel_number="0" individual_measure="0" measure_id="100" measure_label="Total number of cells (final targets)" measure_unit="" measure_source="Ch 1" complex_measure_name="Total number of cells (final targets)" summary_id="413" owner="1" />
+<measure_setting channel_number="1" individual_measure="1" measure_id="100" measure_label="GFP status" measure_unit="" measure_source="Ch 2" complex_measure_name="cls_GFP status" summary_id="-1" owner="2" />
+<measure_setting channel_number="2" individual_measure="1" measure_id="100" measure_label="Olig2 status" measure_unit="" measure_source="Ch 3" complex_measure_name="cls_Olig2 status" summary_id="-1" owner="2" />
+</measures>
+</targetpath>
+</targetpath_settings>
+<cell_tracking enabled="false" track_targetset="" tracking_method="proximity" relative_threshold = "3" outlier_detection = "8" number_PF_wieght = "2" threshold_factor_PF = "5" >
+<measures >
+</measures>
+</cell_tracking>
+<Classifiers><linear_discriminant name = "GFP status"><feature_vector/><dev_feature_vector><dev_measures name = "Mean Intensity FITC Nuc" id = "100" source = "Ch 2" target = "final target set"/></dev_feature_vector><categories><Class name = "GFP neg" symbol = "GFP neg" color = "Red"/><Class name = "GFP pos" symbol = "GFP pos" color = "Green"/></categories><classifier_data feature_space_dim = "1" layout_type = "8"><logical_variables><adaline symbol = "threshold" bias = "-200.00000000000"><weights>1 </weights></adaline></logical_variables><bool_functions><category_definitions><function category = "0" RPN_expression = "threshold !"/><function category = "1" RPN_expression = "threshold"/></category_definitions></bool_functions><transformations><variable transform = "None"/><variable transform = "None"/></transformations></classifier_data></linear_discriminant><linear_discriminant name = "Olig2 status"><feature_vector/><dev_feature_vector><dev_measures name = "Mean Intensity TR Nuc" id = "100" source = "Ch 3" target = "final target set"/></dev_feature_vector><categories><Class name = "Olig2 neg" symbol = "Olig2 neg" color = "Red"/><Class name = "Olig2 pos" symbol = "Olig2 pos" color = "Green"/></categories><classifier_data feature_space_dim = "1" layout_type = "8"><logical_variables><adaline symbol = "threshold" bias = "-200.00000000000"><weights>1 </weights></adaline></logical_variables><bool_functions><category_definitions><function category = "0" RPN_expression = "threshold !"/><function category = "1" RPN_expression = "threshold"/></category_definitions></bool_functions><transformations><variable transform = "None"/><variable transform = "None"/></transformations></classifier_data></linear_discriminant></Classifiers><stack_transform_settings stack_transform_manager="default" >
+</stack_transform_settings>
+<GroupSummary GroupBy="New Decision Tree: Ch 3" Plate="Well" Field="All" Time_Z="Each" >
+<Measure name="Percentage (%)" />
+<Measure name="Total neurite length per cell: Ch 4(Avg)" />
+<Measure name="Total neurite length per cell: Ch 4(StdDev)" />
+<Measure name="Total neurite length per cell: Ch 4(Count)" />
+<Measure name="Total neurite length in collar: Ch 4(Avg)" />
+<Measure name="Total neurite length in collar: Ch 4(StdDev)" />
+<Measure name="Total neurite length in collar: Ch 4(Count)" />
+<Measure name="Total Area Neurites/area collar: Ch 4(Avg)" />
+<Measure name="Total Area Neurites/area collar: Ch 4(StdDev)" />
+<Measure name="Total Area Neurites/area collar: Ch 4(Count)" />
+</GroupSummary>
+</ex_sample_engine_settings>
+</exsampengspecificdata>
+<macro_definitions >
+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
+</macro_definitions>
+</analysisprotocol>
